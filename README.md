@@ -2,8 +2,8 @@
 
 https://www.udemy.com/course/testes-unitarios-em-java/
 
-## Aula 9-10 - jUnit
-### Tratando exceções:
+## **Aula 9-10 - jUnit**
+### **Tratando exceções:**
 
 - Exemplo de uso do ```Assert.assertThat``` para verificar uma exception esperada
 
@@ -67,8 +67,8 @@ public void testeLocacao_filmeVazio() throws FilmeSemEstoqueException, LocadoraE
 Usamos o atributo para falarmos a exceção e informações da mesma que
 são esperadas.
 
-## Aula 11 - jUnit
-### Before e After:
+## **Aula 11 - jUnit**
+### **Before e After:**
 
 - Exemplo de uso do ```@Before```
 
@@ -97,6 +97,29 @@ Usamos quando queremos inicializar variaveis que terão seu valores
 mantidos durante toda a bateria de testes.
 
 **Obs: O método com anotação ```@BeforeClass``` deve ser static**
+
+**Obs: Também existem as anotações ```@After``` e ```@AfterClass```
+que seguem as mesmas regras do **Bofore** porém são executadas
+no término dos testes.**
+
+## **Aula 12 - jUnit**
+### **Ordem de execução dos teste**
+
+- Exemplo de uso do ```@FixMethodOrder``` para garantir a ordem dos testes.
+
+```java
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class OrdemTeste {
+}
+```
+
+Usamos a anotação ```FixMethodOrder``` em cima do nome da classe acompanhada
+dos valores fornecidos pela classe ``MethodSorters`` para determinarmos
+algumas formas de ordenação dos nossos testes.
+
+**Obs: No exemplo estamos ordenando de forma alfabética**
+
+
 
 
 

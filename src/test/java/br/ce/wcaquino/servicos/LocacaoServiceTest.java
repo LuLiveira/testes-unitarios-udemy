@@ -28,27 +28,9 @@ public class LocacaoServiceTest {
 
     public LocacaoService service;
 
-    public static int contador;
-
     @Before
     public void init(){
         service = new LocacaoService();
-        contador++;
-    }
-
-    @BeforeClass
-    public static void initClass(){
-        contador = 0;
-    }
-
-    @AfterClass
-    public static void finishClass(){
-        System.out.println(contador);
-    }
-
-    @After
-    public void finish(){
-//        System.out.println("fim do teste");
     }
 
     @Test
