@@ -13,6 +13,7 @@ import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -40,7 +41,7 @@ public class LocacaoServiceTest {
         Filme filme = new Filme("Filme 1", 2, 5.0);
 
         //acao
-        Locacao locacao = service.alugarFilme(usuario, filme);
+        Locacao locacao = service.alugarFilme(usuario, List.of(filme));
 
         //verificacao
         error.checkThat(locacao.getValor(), is(equalTo(5.0)));
@@ -56,7 +57,7 @@ public class LocacaoServiceTest {
 		Filme filme = new Filme("Filme 1", 0, 5.0);
 
 		//acao
-		service.alugarFilme(usuario, filme);
+		service.alugarFilme(usuario, List.of(filme));
 	}
 
     @Test
@@ -67,7 +68,7 @@ public class LocacaoServiceTest {
 
         //acao
         try {
-            service.alugarFilme(null, filme);
+            service.alugarFilme(null, List.of(filme));
             Assert.fail();
         } catch (LocadoraException e) {
             Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuário vázio"));
