@@ -18,7 +18,7 @@ public class LocacaoService {
             throw new LocadoraException("Usuário vázio");
         }
 
-        if (filmes == null) {
+        if (filmes == null || filmes.size() == 0) {
             throw new LocadoraException("Filme vázio");
         }
 
