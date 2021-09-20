@@ -4,6 +4,8 @@ package br.ce.wcaquino.servicos;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
+import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -42,8 +44,8 @@ public class LocacaoServiceTest {
         error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
     }
 
-	@Test(expected = Exception.class)
-	public void testeLocacao_filmeSemEsstoque() throws Exception {
+	@Test(expected = FilmeSemEstoqueException.class)
+	public void testeLocacao_filmeSemEsstoque() throws FilmeSemEstoqueException, LocadoraException {
 		//cenario
 		LocacaoService service = new LocacaoService();
 		Usuario usuario = new Usuario("Usuario 1");
@@ -53,37 +55,66 @@ public class LocacaoServiceTest {
 		service.alugarFilme(usuario, filme);
 	}
 
-	@Test
-	public void testeLocacao_filmeSemEstoque_2(){
-		//cenario
-		LocacaoService service = new LocacaoService();
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1", 0, 5.0);
-//		Filme filme = new Filme("Filme 1", 2, 5.0);
+    @Test
+    public void testeLocacao_usuarioVazio() throws FilmeSemEstoqueException {
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Filme filme = new Filme("Filme 1", 1, 5.0);
 
-		//acao
-		try {
-			service.alugarFilme(usuario, filme);
-			Assert.fail("Deveria ter lançado uma exception");
-		} catch (Exception e) {
-			Assert.assertThat(e.getMessage(), CoreMatchers.is("Filme sem estoque"));
-		}
-	}
+        //acao
+        try {
+            service.alugarFilme(null, filme);
+            Assert.fail();
+        } catch (LocadoraException e) {
+            Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuário vázio"));
+        }
+    }
 
-	@Test
-	public void testeLocacao_filmeSemEstoque_3() throws Exception {
-		//cenario
-		LocacaoService service = new LocacaoService();
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1", 0, 5.0);
+    @Test
+    public void testeLocacao_filmeVazio() throws FilmeSemEstoqueException, LocadoraException {
 
-		exception.expect(Exception.class);
-		exception.expectMessage("Filme sem estoque");
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
 
-		//acao
-		service.alugarFilme(usuario, filme);
+        exception.expectMessage("Filme vázio");
+        exception.expect(LocadoraException.class);
 
+        //acao
+        service.alugarFilme(usuario, null);
+    }
+
+//	@Test
+//	public void testeLocacao_filmeSemEstoque_2(){
+//		//cenario
+//		LocacaoService service = new LocacaoService();
+//		Usuario usuario = new Usuario("Usuario 1");
+//		Filme filme = new Filme("Filme 1", 0, 5.0);
+////		Filme filme = new Filme("Filme 1", 2, 5.0);
+//
+//		//acao
+//		try {
+//			service.alugarFilme(usuario, filme);
+//			Assert.fail("Deveria ter lançado uma exception");
+//		} catch (Exception e) {
+//			Assert.assertThat(e.getMessage(), CoreMatchers.is("Filme sem estoque"));
+//		}
+//	}
+//
+//	@Test
+//	public void testeLocacao_filmeSemEstoque_3() throws Exception {
+//		//cenario
+//		LocacaoService service = new LocacaoService();
+//		Usuario usuario = new Usuario("Usuario 1");
+//		Filme filme = new Filme("Filme 1", 0, 5.0);
+//
 //		exception.expect(Exception.class);
 //		exception.expectMessage("Filme sem estoque");
-	}
+//
+//		//acao
+//		service.alugarFilme(usuario, filme);
+//
+////		exception.expect(Exception.class);
+////		exception.expectMessage("Filme sem estoque");
+//	}
 }
