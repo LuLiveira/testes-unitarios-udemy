@@ -8,9 +8,7 @@ import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
 import br.ce.wcaquino.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
@@ -28,10 +26,34 @@ public class LocacaoServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
+    public LocacaoService service;
+
+    public static int contador;
+
+    @Before
+    public void init(){
+        service = new LocacaoService();
+        contador++;
+    }
+
+    @BeforeClass
+    public static void initClass(){
+        contador = 0;
+    }
+
+    @AfterClass
+    public static void finishClass(){
+        System.out.println(contador);
+    }
+
+    @After
+    public void finish(){
+//        System.out.println("fim do teste");
+    }
+
     @Test
     public void testeLocacao() throws Exception {
         //cenario
-        LocacaoService service = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 2, 5.0);
 

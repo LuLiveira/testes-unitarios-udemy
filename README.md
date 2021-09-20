@@ -67,5 +67,39 @@ public void testeLocacao_filmeVazio() throws FilmeSemEstoqueException, LocadoraE
 Usamos o atributo para falarmos a exceção e informações da mesma que
 são esperadas.
 
+## Aula 11 - jUnit
+### Before e After:
+
+- Exemplo de uso do ```@Before```
+
+```java
+public LocacaoService service;
+@Before
+public void init(){
+    service = new LocacaoService();
+}
+```
+
+Usamos quando queremos inicializar variaveis antes de cada teste
+
+**Obs: O ```@Before``` é executado sempre antes de cada método de teste**
+
+- Exemplo de uso do ```@BeforeClass```
+
+```java
+public static LocacaoService service;
+@BeforeClass
+public static void init(){
+    service = new LocacaoService();
+}
+```
+Usamos quando queremos inicializar variaveis que terão seu valores
+mantidos durante toda a bateria de testes.
+
+**Obs: O método com anotação ```@BeforeClass``` deve ser static**
+
+
+
+
 
 
