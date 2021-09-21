@@ -117,7 +117,38 @@ Usamos a anotação ```FixMethodOrder``` em cima do nome da classe acompanhada
 dos valores fornecidos pela classe ``MethodSorters`` para determinarmos
 algumas formas de ordenação dos nossos testes.
 
-**Obs: No exemplo estamos ordenando de forma alfabética**
+**Obs: No exemplo estamos ordenando de forma alfabética**-
+
+## **Aula 14 - jUnit**
+### **TDD (Test Driven Development)**
+
+- A técnica consiste em criar primeiro o teste e em seguida fazer ele
+ passar.
+
+  - Primeiro o teste *(vai falhar)*:  
+```java
+@Test
+public void deveSomarDoisValores(){
+    int a = 5;
+    int b = 3;
+    Calculadora calculadora = new Calculadora();
+
+    //acao
+    int resultado = calculadora.somar(a,b);
+
+    //verificacao
+    Assert.assertEquals(8, resultado);
+}
+```
+- Segundo o código:
+```java
+public class Calculadora {
+    public int somar(int a, int b) {
+        return a+b;
+    }
+}
+```
+
 
 
 

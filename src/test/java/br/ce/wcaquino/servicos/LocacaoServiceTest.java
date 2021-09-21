@@ -89,6 +89,8 @@ public class LocacaoServiceTest {
         service.alugarFilme(usuario, null);
     }
 
+
+
 //	@Test
 //	public void testeLocacao_filmeSemEstoque_2(){
 //		//cenario
