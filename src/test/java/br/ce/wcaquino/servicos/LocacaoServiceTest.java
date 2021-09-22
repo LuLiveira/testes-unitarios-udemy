@@ -12,6 +12,8 @@ import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import javax.xml.crypto.Data;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +38,8 @@ public class LocacaoServiceTest {
 
     @Test
     public void testeLocacao() throws Exception {
+        Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
         //cenario
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 2, 5.0);
@@ -151,6 +155,20 @@ public class LocacaoServiceTest {
 
         //verificacao
         Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
+    }
+
+    @Test
+    public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = List.of(new Filme("ABC", 2, 4.0));
+
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        boolean isSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+
+        Assert.assertTrue(isSegunda);
     }
 
 
