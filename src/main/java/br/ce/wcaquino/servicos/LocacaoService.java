@@ -23,7 +23,7 @@ public class LocacaoService {
         }
 
         for (Filme filme : filmes) {
-            if(filme.getEstoque() == 0){
+            if (filme.getEstoque() == 0) {
                 throw new FilmeSemEstoqueException();
             }
         }
@@ -32,10 +32,26 @@ public class LocacaoService {
         locacao.setFilme(filmes);
         locacao.setUsuario(usuario);
         locacao.setDataLocacao(new Date());
-        locacao.setValor(
-                filmes.stream().map(Filme::getPrecoLocacao).reduce(0.0, (subtotal, preco) -> subtotal + preco)
-        );
+//        locacao.setValor(
+//                filmes.stream().map(Filme::getPrecoLocacao).reduce(0.0, (subtotal, preco) -> subtotal + preco)
+//        );
 
+        Double valorTotal = 0d;
+        for (int i = 0; i < filmes.size(); i++) {
+            Filme filme = filmes.get(i);
+            Double valor = filme.getPrecoLocacao();
+
+            switch (i) {
+                case 2 -> valor *= 0.75;
+                case 3 -> valor *= 0.50;
+                case 4 -> valor *= 0.25;
+                case 5 -> valor *= 0.0;
+            }
+
+            valorTotal += valor;
+        }
+
+        locacao.setValor(valorTotal);
         //Entrega no dia seguinte
         Date dataEntrega = new Date();
         dataEntrega = adicionarDias(dataEntrega, 1);

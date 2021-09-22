@@ -89,6 +89,69 @@ public class LocacaoServiceTest {
         service.alugarFilme(usuario, null);
     }
 
+    @Test
+    public void devePagar75pctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = List.of(new Filme("Filme 1", 2, 4.0), new Filme("Filme 2", 2, 4.0), new Filme("Filme 3", 2, 4.0));
+
+        //acao
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificacao
+        Assert.assertThat(locacao.getValor(), CoreMatchers.is(11.0));
+    }
+
+    @Test
+    public void devePagar50pctNoFilme4() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = List.of(new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 3", 2, 4.0));
+
+        //acao
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificacao
+        Assert.assertThat(locacao.getValor(), CoreMatchers.is(13.0));
+    }
+
+    @Test
+    public void devePagar25pctNoFilme5() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = List.of(new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 3", 2, 4.0));
+
+        //acao
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificacao
+        Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
+    }
+
+    @Test
+    public void devePagar0pctNoFilme6() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = List.of(new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 1", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 2", 2, 4.0),
+                new Filme("Filme 3", 2, 4.0));
+
+        //acao
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificacao
+        Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
+    }
 
 
 //	@Test
