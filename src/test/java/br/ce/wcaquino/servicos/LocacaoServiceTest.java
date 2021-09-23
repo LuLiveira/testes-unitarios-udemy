@@ -6,6 +6,8 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
+import br.ce.wcaquino.servicos.matchers.DiaSemanaMatcher;
+import br.ce.wcaquino.servicos.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.*;
@@ -17,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.caiEm;
+import static br.ce.wcaquino.servicos.matchers.MatchersProprios.caiEmUmaSegunda;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -26,13 +30,13 @@ public class LocacaoServiceTest {
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     public LocacaoService service;
 
     @Before
-    public void init(){
+    public void init() {
         service = new LocacaoService();
     }
 
@@ -53,16 +57,16 @@ public class LocacaoServiceTest {
         error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
     }
 
-	@Test(expected = FilmeSemEstoqueException.class)
-	public void testeLocacao_filmeSemEsstoque() throws FilmeSemEstoqueException, LocadoraException {
-		//cenario
-		LocacaoService service = new LocacaoService();
-		Usuario usuario = new Usuario("Usuario 1");
-		Filme filme = new Filme("Filme 1", 0, 5.0);
+    @Test(expected = FilmeSemEstoqueException.class)
+    public void testeLocacao_filmeSemEsstoque() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        LocacaoService service = new LocacaoService();
+        Usuario usuario = new Usuario("Usuario 1");
+        Filme filme = new Filme("Filme 1", 0, 5.0);
 
-		//acao
-		service.alugarFilme(usuario, List.of(filme));
-	}
+        //acao
+        service.alugarFilme(usuario, List.of(filme));
+    }
 
     @Test
     public void testeLocacao_usuarioVazio() throws FilmeSemEstoqueException {
@@ -75,7 +79,7 @@ public class LocacaoServiceTest {
             service.alugarFilme(null, List.of(filme));
             Assert.fail();
         } catch (LocadoraException e) {
-            Assert.assertThat(e.getMessage(), CoreMatchers.is("Usuário vázio"));
+            assertThat(e.getMessage(), CoreMatchers.is("Usuário vázio"));
         }
     }
 
@@ -103,7 +107,7 @@ public class LocacaoServiceTest {
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //verificacao
-        Assert.assertThat(locacao.getValor(), CoreMatchers.is(11.0));
+        assertThat(locacao.getValor(), CoreMatchers.is(11.0));
     }
 
     @Test
@@ -119,7 +123,7 @@ public class LocacaoServiceTest {
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //verificacao
-        Assert.assertThat(locacao.getValor(), CoreMatchers.is(13.0));
+        assertThat(locacao.getValor(), CoreMatchers.is(13.0));
     }
 
     @Test
@@ -136,7 +140,7 @@ public class LocacaoServiceTest {
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //verificacao
-        Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
+        assertThat(locacao.getValor(), CoreMatchers.is(14.0));
     }
 
     @Test
@@ -154,7 +158,7 @@ public class LocacaoServiceTest {
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //verificacao
-        Assert.assertThat(locacao.getValor(), CoreMatchers.is(14.0));
+        assertThat(locacao.getValor(), CoreMatchers.is(14.0));
     }
 
     @Test
@@ -166,9 +170,12 @@ public class LocacaoServiceTest {
 
         Locacao locacao = service.alugarFilme(usuario, filmes);
 
-        boolean isSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
-
-        Assert.assertTrue(isSegunda);
+//        boolean isSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+//
+//        Assert.assertTrue(isSegunda);
+//        assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+//        assertThat(locacao.getDataRetorno(), caiEm(Calendar.MONDAY));
+        assertThat(locacao.getDataRetorno(), caiEmUmaSegunda());
     }
 
 

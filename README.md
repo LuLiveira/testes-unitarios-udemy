@@ -230,8 +230,74 @@ Dessa forma para o teste serão usados os parametros e caso existam mais de um s
 
 Obs: O primeiro parametro não necessita de value pois ele tem como valor o 0 (primeiro item da lista).
 
+## **Aula 19 - jUnit**
+### **Matchers Próprios**
 
+- Exemplo de Matcher próprio
 
+```java
+public class DiaSemanaMatcher extends TypeSafeMatcher<Date> {
+ private Integer diaSemana;
 
+ public DiaSemanaMatcher(Integer diaSemana) {
+     this.diaSemana = diaSemana;
+ }
+
+ @Override
+ protected boolean matchesSafely(Date data) {
+    return DataUtils.verificarDiaSemana(data, diaSemana);
+ }
+
+ @Override
+ public void describeTo(Description description) {}
+}
+```
+
+- Exemplo de uso do Matcher
+```java
+@Test
+public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+    Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
+    Usuario usuario = new Usuario();
+    List<Filme> filmes = List.of(new Filme("ABC", 2, 4.0));
+
+    Locacao locacao = service.alugarFilme(usuario, filmes);
+
+    assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+}
+```
+
+- Melhorando a legibilidade com um metodo `static`
+```java
+public class MatchersProprios {
+ public static DiaSemanaMatcher caiEm(Integer diaSemana){
+     return new DiaSemanaMatcher(diaSemana);
+ }
+}
+```
+
+- O resultado final ficaria
+````java
+assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
+assertThat(locacao.getDataRetorno(), caiEm(Calendar.MONDAY));
+````
+
+Obs: O uso do matcher proprio se faz necessário quando queremos validar um regra
+muito especifica do nosso código e queremos que a validação fique tenha uma leitura clara. 
+
+- Melhorando a mensagem de erro do matcher próprio
+
+````java
+@Override
+public void describeTo(Description description) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.DAY_OF_WEEK, diaSemana);
+    String dataExtenso = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, new Locale("pt", "BR"));
+    description.appendText(dataExtenso);
+}
+````
+
+Obs: Basta colocar a mensagem de erro que queremos no método describeTo da classe `DiaSemanaMatcher`
 
 
