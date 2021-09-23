@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import static br.ce.wcaquino.matchers.MatchersProprios.caiEmUmaSegunda;
+import static br.ce.wcaquino.matchers.MeuMatcher.ehHoje;
 import static br.ce.wcaquino.matchers.MeuMatcher.ehHojeComDiferencaDias;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -51,7 +52,7 @@ public class LocacaoServiceTest {
 
         //verificacao
         error.checkThat(locacao.getValor(), is(equalTo(5.0)));
-        error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
+        error.checkThat(locacao.getDataLocacao(), ehHoje());
         error.checkThat(locacao.getDataRetorno(), ehHojeComDiferencaDias(1));
     }
 
