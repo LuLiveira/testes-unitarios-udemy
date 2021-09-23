@@ -1,5 +1,8 @@
 package br.ce.wcaquino.entidades;
 
+import lombok.Builder;
+
+@Builder
 public class Filme {
 
 	private String nome;

@@ -1,7 +1,10 @@
 package br.ce.wcaquino.entidades;
 
+import lombok.Builder;
+
 import java.util.Objects;
 
+@Builder
 public class Usuario {
 
 	private String nome;
