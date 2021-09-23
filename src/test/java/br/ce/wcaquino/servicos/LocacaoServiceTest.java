@@ -12,6 +12,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Calendar;
@@ -37,28 +38,54 @@ public class LocacaoServiceTest {
 
     public LocacaoDao locacaoDao;
 
+    public EmailService emailService;
+
     @Before
     public void init() {
         service = new LocacaoService();
+
         locacaoDao = Mockito.mock(LocacaoDao.class);
         spcService = Mockito.mock(SPCService.class);
+        emailService = Mockito.mock(EmailService.class);
+
         service.setDao(locacaoDao);
         service.setSpcService(spcService);
+        service.setEmailService(emailService);
     }
 
     @Test
-    public void naoDeveAlugarFilmeParaUsuarioNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+    public void deveEnviarEmailParaLocacoesAtrasadas(){
+        //cenario
+        Usuario usuario = Usuario.builder().build();
+        List<Locacao> locacoes = List.of(Locacao.builder().usuario(usuario).dataRetorno(DataUtils.obterDataComDiferencaDias(-2)).build());
+
+        Mockito.when(locacaoDao.obterLocacoesPendentes()).thenReturn(locacoes);
+
+        //acao
+        service.notificarAtrasos();
+
+        //verificacao
+        Mockito.verify(emailService).notificarAtraso(usuario);
+    }
+
+    @Test
+    public void naoDeveAlugarFilmeParaUsuarioNegativadoSPC() throws FilmeSemEstoqueException {
         //cenario
         Usuario usuario = Usuario.builder().build();
         List<Filme> filmes = List.of(Filme.builder().estoque(2).nome("Filme 1").precoLocacao(4.0).build());
 
         Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
 
-        exception.expect(LocadoraException.class);
-        exception.expectMessage("Usuário Negativado");
-
         //acao
-        service.alugarFilme(usuario, filmes);
+        try {
+            service.alugarFilme(usuario, filmes);
+            Assert.fail();
+        } catch (LocadoraException e) {
+            Assert.assertThat(e.getMessage(), is("Usuário Negativado"));
+        }
+
+        //verificacao
+        Mockito.verify(spcService).possuiNegativacao(usuario);
     }
 
     @Test

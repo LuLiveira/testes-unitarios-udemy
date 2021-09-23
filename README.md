@@ -345,3 +345,11 @@ Obs: Dessa forma criamos um objeto "falso" para que nossos testes possam ser exe
 Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
 ````
 
+## **Aula 29 - Mocks**
+### **Verificando Comportamentos**
+
+- Exemplo de verificação de comportamento com Mockito
+
+````java
+Mockito.verify(emailService).notificarAtraso(usuario);
+````
