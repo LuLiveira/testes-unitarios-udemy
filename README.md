@@ -300,4 +300,26 @@ public void describeTo(Description description) {
 
 Obs: Basta colocar a mensagem de erro que queremos no método describeTo da classe `DiaSemanaMatcher`
 
+## **Aula 21 - jUnit**
+### **Suite de testes**
 
+- Exemplo de suite de teste
+
+````java
+@RunWith(Suite.class)
+@SuiteClasses({
+        CalculadoraTest.class,
+        CalculoValorLocacaoTest.class,
+        LocacaoServiceTest.class
+})
+public class SuiteExecucao {
+
+ @BeforeClass
+ public void setup(){
+  System.out.println("Também conseguimos usar @Before e @After");
+ }
+}
+````
+
+Obs: Utilizamos a classe com as anotações `@RunWith(Suite.class)` e `@SuiteClasses({})` e informamos ao `junit` quais são as classes de testes que queremos que sejam executadas.
+É possível também utilizarmos as anotações `@Before` e `@After` para executarmos código antes e depois da bateria de testes
