@@ -6,7 +6,6 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
-import br.ce.wcaquino.matchers.MeuMatcher;
 import br.ce.wcaquino.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.*;
@@ -17,9 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static br.ce.wcaquino.matchers.MatchersProprios.caiEmUmaSegunda;
-import static br.ce.wcaquino.matchers.MeuMatcher.ehHoje;
-import static br.ce.wcaquino.matchers.MeuMatcher.ehHojeComDiferencaDias;
+import static br.ce.wcaquino.matchers.MatchersProprios.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

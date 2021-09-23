@@ -11,4 +11,12 @@ public class MatchersProprios {
     public static DiaSemanaMatcher caiEmUmaSegunda(){
         return new DiaSemanaMatcher(Calendar.MONDAY);
     }
+
+    public static MeuMatcherProprio ehHoje(){
+        return new MeuMatcherProprio(0);
+    }
+
+    public static MeuMatcherProprio ehHojeComDiferencaDias(Integer dias){
+        return new MeuMatcherProprio(dias);
+    }
 }
