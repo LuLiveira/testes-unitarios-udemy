@@ -326,6 +326,7 @@ Obs: Utilizamos a classe com as anotações `@RunWith(Suite.class)` e `@SuiteCla
 
 
 ## **Aula 27 - Mocks**
+### **Mockito***
 
 - Exemplo de uso do mockito para mockar uma classa
 
@@ -334,4 +335,13 @@ LocacaoDao dao = Mockito.mock(LocacaoDao.class);
 ````
 
 Obs: Dessa forma criamos um objeto "falso" para que nossos testes possam ser executados sem que aja a necessidade de chamar a dependencia externa do mesmo.
+
+## **Aula 28 - Mocks**
+### **Gravando Expectativas**
+
+- Exemplo de alteração de comportamento utilizando mockito.
+
+````java
+Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
+````
 

@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.List;
@@ -37,7 +38,9 @@ public class CalculoValorLocacaoTest {
     public void setup() {
         service = new LocacaoService();
         LocacaoDao dao = Mockito.mock(LocacaoDao.class);
-        service.setLocacaoDao(dao);
+        SPCService spcService = Mockito.mock(SPCService.class);
+        service.setDao(dao);
+        service.setSpcService(spcService);
     }
 
     @Parameters(name = "Teste {index} = {2}")
