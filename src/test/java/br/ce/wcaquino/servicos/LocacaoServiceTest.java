@@ -1,6 +1,7 @@
 package br.ce.wcaquino.servicos;
 
 
+import br.ce.wcaquino.dao.LocacaoDao;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -11,6 +12,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +36,8 @@ public class LocacaoServiceTest {
     @Before
     public void init() {
         service = new LocacaoService();
+        LocacaoDao dao = Mockito.mock(LocacaoDao.class);
+        service.setLocacaoDao(dao);
     }
 
     @Test

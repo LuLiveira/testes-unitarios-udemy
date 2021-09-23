@@ -323,3 +323,15 @@ public class SuiteExecucao {
 
 Obs: Utilizamos a classe com as anotações `@RunWith(Suite.class)` e `@SuiteClasses({})` e informamos ao `junit` quais são as classes de testes que queremos que sejam executadas.
 É possível também utilizarmos as anotações `@Before` e `@After` para executarmos código antes e depois da bateria de testes
+
+
+## **Aula 27 - Mocks**
+
+- Exemplo de uso do mockito para mockar uma classa
+
+````java
+LocacaoDao dao = Mockito.mock(LocacaoDao.class);
+````
+
+Obs: Dessa forma criamos um objeto "falso" para que nossos testes possam ser executados sem que aja a necessidade de chamar a dependencia externa do mesmo.
+
