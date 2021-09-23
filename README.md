@@ -188,6 +188,47 @@ O `Assume.assumeTrue` ira garantir que o nosso teste seja executado apenas quand
 for ***verdadeiro*** dessa forma, no teste de exemplo sempre que não for sabádo o teste será passado/ignorado
 
 
+## **Aula 18 - jUnit**
+### **Testes parametrizaveis**
+
+- Exemplo de Data Driven Test que consiste com um unico teste validar cenários de acordo com os parametros passados
+
+```java
+@RunWith(Parameterized.class)
+public class CalculoValorLocacaoTest {
+
+ @Parameter
+ public List<Filme> filmes;
+
+ @Parameter(value = 1)
+ public Double valorLocacao;
+
+ @Parameters(name = "Teste {index} = {0} - {1}")
+ public static Collection<Object[]> getParametros() {
+  return List.of(new Object[][]{
+          {
+                  List.of(new Filme("Filme 1", 2, 4.0),
+                          new Filme("Filme 2", 2, 4.0),
+                          new Filme("Filme 2", 2, 4.0)), 11.0
+          }
+  });
+ }
+
+ @Test
+ public void deveCalcularValorLocacaoConsiderandoDescontos() throws FilmeSemEstoqueException, LocadoraException {
+
+  Usuario usuario = new Usuario();
+
+  Locacao locacao = service.alugarFilme(usuario, filmes);
+
+  Assert.assertThat(locacao.getValor(), CoreMatchers.is(valorLocacao));
+ }
+}
+```
+
+Dessa forma para o teste serão usados os parametros e caso existam mais de um serão executados o numero de testes correspondente ao numero de parametros
+
+Obs: O primeiro parametro não necessita de value pois ele tem como valor o 0 (primeiro item da lista).
 
 
 
