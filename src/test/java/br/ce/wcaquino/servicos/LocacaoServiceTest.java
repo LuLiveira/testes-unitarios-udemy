@@ -12,7 +12,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Calendar;
@@ -56,8 +55,13 @@ public class LocacaoServiceTest {
     @Test
     public void deveEnviarEmailParaLocacoesAtrasadas(){
         //cenario
-        Usuario usuario = Usuario.builder().build();
-        List<Locacao> locacoes = List.of(Locacao.builder().usuario(usuario).dataRetorno(DataUtils.obterDataComDiferencaDias(-2)).build());
+        Usuario usuario = Usuario.builder().nome("Joao").build();
+        Usuario usuario2 = Usuario.builder().nome("Lucas").build();
+        List<Locacao> locacoes = List.of(
+                Locacao.builder()
+                        .usuario(usuario).dataRetorno(DataUtils.obterDataComDiferencaDias(-2)).build(),
+                Locacao.builder()
+                        .usuario(usuario2).dataRetorno(DataUtils.obterDataComDiferencaDias(1)).build());
 
         Mockito.when(locacaoDao.obterLocacoesPendentes()).thenReturn(locacoes);
 
@@ -65,7 +69,10 @@ public class LocacaoServiceTest {
         service.notificarAtrasos();
 
         //verificacao
-        Mockito.verify(emailService).notificarAtraso(usuario);
+        Mockito.verify(emailService, Mockito.times(1)).notificarAtraso(Mockito.any(Usuario.class));
+        Mockito.verify(emailService, Mockito.times(1)).notificarAtraso(usuario);
+        Mockito.verify(emailService, Mockito.never()).notificarAtraso(usuario2);
+        Mockito.verifyNoMoreInteractions(emailService);
     }
 
     @Test

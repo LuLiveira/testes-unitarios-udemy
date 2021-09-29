@@ -353,3 +353,29 @@ Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
 ````java
 Mockito.verify(emailService).notificarAtraso(usuario);
 ````
+
+Obs: dessa forma conseguimos garantir que o método `notificar` do `emailService` foi chamado
+
+- Exemplo de como garantir que o método **não** foi chamado para um usuário
+
+```java
+Mockito.verify(emailService, Mockito.never()).notificarAtraso(usuario2);
+```
+
+Obs: O `Mockito.never()` garante que o método **não** foi chamado para aquele *usuario2*
+
+- Exemplo de como garantir que o método **não** foi chamado mais nenhuma vez
+
+````java
+Mockito.verifyNoMoreInteractions(emailService);
+````
+
+Obs: dessa forma garantimos que não foi chamado o emailService nenhuma outra vez
+
+- Exemplo de verificação de quantos email foram enviados
+
+````java
+Mockito.verify(emailService, Mockito.times(1)).notificarAtraso(Mockito.any(Usuario.class));
+````
+
+

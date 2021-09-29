@@ -80,7 +80,11 @@ public class LocacaoService {
 
     public void notificarAtrasos(){
         List<Locacao> locacoes = dao.obterLocacoesPendentes();
-        locacoes.stream().map(Locacao::getUsuario).forEach(usuario -> emailService.notificarAtraso(usuario));
+        locacoes.forEach(locacao -> {
+            if(locacao.getDataRetorno().before(new Date())){
+                emailService.notificarAtraso(locacao.getUsuario());
+            }
+        });
 //        locacoes.forEach(locacao -> emailService.notificarAtraso(locacao.getUsuario()));
     }
 
