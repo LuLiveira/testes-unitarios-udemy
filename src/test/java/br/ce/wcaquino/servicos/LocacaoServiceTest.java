@@ -12,7 +12,10 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,25 +34,30 @@ public class LocacaoServiceTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    @InjectMocks
     public LocacaoService service;
 
+    @Mock
     public SPCService spcService;
 
+    @Mock
     public LocacaoDao locacaoDao;
 
+    @Mock
     public EmailService emailService;
 
     @Before
     public void init() {
         service = new LocacaoService();
 
-        locacaoDao = Mockito.mock(LocacaoDao.class);
-        spcService = Mockito.mock(SPCService.class);
-        emailService = Mockito.mock(EmailService.class);
+        MockitoAnnotations.openMocks(this);
+//        locacaoDao = Mockito.mock(LocacaoDao.class);
+//        spcService = Mockito.mock(SPCService.class);
+//        emailService = Mockito.mock(EmailService.class);
 
-        service.setDao(locacaoDao);
-        service.setSpcService(spcService);
-        service.setEmailService(emailService);
+//        service.setDao(locacaoDao);
+//        service.setSpcService(spcService);
+//        service.setEmailService(emailService);
     }
 
     @Test

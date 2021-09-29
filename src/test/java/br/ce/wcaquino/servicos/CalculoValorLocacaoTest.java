@@ -14,14 +14,17 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
 @RunWith(Parameterized.class)
 public class CalculoValorLocacaoTest {
 
+    @InjectMocks
     public LocacaoService service;
 
     @Parameter
@@ -33,14 +36,20 @@ public class CalculoValorLocacaoTest {
     @Parameter(value = 2)
     public String cenario;
 
+    @Mock
+    public LocacaoDao dao;
+
+    @Mock
+    public SPCService spcService;
 
     @Before
     public void setup() {
         service = new LocacaoService();
-        LocacaoDao dao = Mockito.mock(LocacaoDao.class);
-        SPCService spcService = Mockito.mock(SPCService.class);
-        service.setDao(dao);
-        service.setSpcService(spcService);
+        MockitoAnnotations.openMocks(this);
+//        LocacaoDao dao = Mockito.mock(LocacaoDao.class);
+//        SPCService spcService = Mockito.mock(SPCService.class);
+//        service.setDao(dao);
+//        service.setSpcService(spcService);
     }
 
     @Parameters(name = "Teste {index} = {2}")

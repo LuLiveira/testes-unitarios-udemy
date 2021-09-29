@@ -326,7 +326,7 @@ Obs: Utilizamos a classe com as anotações `@RunWith(Suite.class)` e `@SuiteCla
 
 
 ## **Aula 27 - Mocks**
-### **Mockito***
+### **Mockito**
 
 - Exemplo de uso do mockito para mockar uma classa
 
@@ -378,4 +378,35 @@ Obs: dessa forma garantimos que não foi chamado o emailService nenhuma outra ve
 Mockito.verify(emailService, Mockito.times(1)).notificarAtraso(Mockito.any(Usuario.class));
 ````
 
+## **Aula 31 - Mocks**
+### **Anotações**
+
+- Anotação para que um objecto seja um ``mock``
+
+```java
+
+@Mock
+public SPCService spcService;
+```
+Obs: Dessa forma dizemos que a classe é um mock
+
+- Anotação para indicar onde os mocks devem ser injetados
+
+````java
+@InjectMocks
+public LocacaoService service;
+````
+
+Obs: Dessa forma informamos que os ``@mocks`` devem ser injetados em `locacaoService`
+
+- Inicializar os `mocks`
+
+````java
+@Before
+public void init(){
+    MockitoAnnotations.openMocks(this);
+}
+````
+
+Obs: Dessa forma os mocks são iniciados antes de cada teste
 
