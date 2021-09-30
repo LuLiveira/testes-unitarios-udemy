@@ -419,3 +419,20 @@ Obs: Dessa forma os mocks são iniciados antes de cada teste
 ````java
 Mockito.when(spcService.possuiNegativacao(usuario)).thenThrow(new Exception("Falha"));
 ````
+
+## **Aula 33- Mocks**
+### **Capturando Argumentos/Argument Captor**
+
+- Para verificar um objeto de foi criado dentro de um método void, por exemplo uma entidade criada a partir de um DTO podemos utilizar o argument captor
+
+````java
+ArgumentCaptor<Locacao> argumentCaptor = ArgumentCaptor.forClass(Locacao.class);
+Mockito.verify(locacaoDao).salvar(argumentCaptor.capture());
+Locacao locacaoRetornada = argumentCaptor.getValue();
+Assert.assertThat(locacaoRetornada.getValor(), CoreMatchers.is(4.0));
+````
+
+Obs: Dessa forma com o `ArgumentCaptor` conseguimos capturar o valor que foi passado para o método
+
+
+
