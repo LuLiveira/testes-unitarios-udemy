@@ -18,7 +18,7 @@ public class CalculadoraTest {
     @Before
     public void setup(){
         calculadora = new Calculadora();
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test

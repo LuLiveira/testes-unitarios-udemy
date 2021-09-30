@@ -45,7 +45,7 @@ public class CalculoValorLocacaoTest {
     @Before
     public void setup() {
         service = new LocacaoService();
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 //        LocacaoDao dao = Mockito.mock(LocacaoDao.class);
 //        SPCService spcService = Mockito.mock(SPCService.class);
 //        service.setDao(dao);

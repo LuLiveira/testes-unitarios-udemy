@@ -14,13 +14,11 @@ import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 import org.mockito.*;
 
-import javax.xml.crypto.Data;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import static br.ce.wcaquino.matchers.MatchersProprios.*;
-import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -49,7 +47,7 @@ public class LocacaoServiceTest {
     public void init() {
         service = new LocacaoService();
 
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 //        locacaoDao = Mockito.mock(LocacaoDao.class);
 //        spcService = Mockito.mock(SPCService.class);
 //        emailService = Mockito.mock(EmailService.class);

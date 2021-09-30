@@ -460,4 +460,22 @@ public void testeSpy(){
 Obs: Quando utilizamos o `spy` para realizar o nosso teste e passamos valores diferentes da expectativa diferente do `mock` o `spy` ira executara o método por padrão, por exemplo:
 no exemplo esperamos 1 e 2 e retornaremos 8 porém foi passado 1 e 5, o 5 não é esperado, se fosse um `mock` o retorno seria 0 (valor padrão de um inteiro) porém como é um `spy` o retorno é 6 pois o spy quando não sabe o que retornar ele executar o próprio método
 
+### Testando métodos privados ###
 
+- Um exemplo para se testar métodos privados é através de reflection
+
+```java
+@Test
+public void testaMetodoPrivado{
+    var list = List.of(new Filme());
+    
+    Class<LocacaoService> clazz = LocacaoService.class;
+    Method metodo = clazz.getDeclaredMethod("nomeDoMetodoPrivado", TipoDoParametroQueOMetodoRecebe.class);
+    metodo.setAccessible(true);
+    Double retornoDoMetodo = (Double) metodo.invoke(service, list);
+    
+    Assert.assertThat(retornoDoMetodo. is(19.0));
+}
+```
+
+Obs: Dessa forma usamos reflection para invocar um metodo privado e ter o seu retorno. 
