@@ -4,14 +4,27 @@ import br.ce.wcaquino.exceptions.NaoPodeDividirPorZeroException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 public class CalculadoraTest {
 
     private Calculadora calculadora;
 
+    @Spy
+    private Calculadora calculadoraSpy;
+
     @Before
     public void setup(){
         calculadora = new Calculadora();
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testeSpy(){
+        Mockito.when(calculadoraSpy.somar(1, 2)).thenReturn(8);
+        System.out.println(calculadora.somar(1,5));
     }
 
     @Test

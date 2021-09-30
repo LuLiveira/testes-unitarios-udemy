@@ -435,4 +435,29 @@ Assert.assertThat(locacaoRetornada.getValor(), CoreMatchers.is(4.0));
 Obs: Dessa forma com o `ArgumentCaptor` conseguimos capturar o valor que foi passado para o método
 
 
+## **Aula 34 - Mocks**
+### **Spy**
+
+- Exemplo do uso da anotação `@Spy`
+
+```java
+@Spy
+private Calculadora calculadoraSpy;
+```
+
+Obs: Usamos a anotação `@Spy` em cima do atributo
+
+- Exemplo utilizando atributo `spy`
+
+```java
+@Test
+public void testeSpy(){
+    Mockito.when(calculadoraSpy.somar(1, 2)).thenReturn(8);
+    System.out.println(calculadora.somar(1,5));
+}
+```
+
+Obs: Quando utilizamos o `spy` para realizar o nosso teste e passamos valores diferentes da expectativa diferente do `mock` o `spy` ira executara o método por padrão, por exemplo:
+no exemplo esperamos 1 e 2 e retornaremos 8 porém foi passado 1 e 5, o 5 não é esperado, se fosse um `mock` o retorno seria 0 (valor padrão de um inteiro) porém como é um `spy` o retorno é 6 pois o spy quando não sabe o que retornar ele executar o próprio método
+
 
