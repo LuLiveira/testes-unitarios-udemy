@@ -410,3 +410,12 @@ public void init(){
 
 Obs: Dessa forma os mocks são iniciados antes de cada teste
 
+
+## **Aula 32 - Mocks**
+### **Lançando ExceçÕes**
+
+- Para verificarmos uma exceção vinda de um mock usamos o `thenThrow` do `Mockito.when`
+
+````java
+Mockito.when(spcService.possuiNegativacao(usuario)).thenThrow(new Exception("Falha"));
+````
